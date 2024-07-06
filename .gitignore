@@ -1,0 +1,8 @@
+# ignore everything in the root directory
+/*
+
+# except .gitignore
+!.gitignore
+
+# .config/nvim
+!.config/nvim/*
