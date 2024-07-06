@@ -6,9 +6,9 @@ return {
 	},
 	config = function()
 		-- import mason
-    local mason = require("mason")
-		
-    -- import mason-lspconfig
+		local mason = require("mason")
+
+		-- import mason-lspconfig
 		local mason_lspconfig = require("mason-lspconfig")
 
 		-- tools installer for formatters
@@ -44,7 +44,5 @@ return {
 				"black", -- python formatter
 			},
 		})
-
-
 	end,
 }
