@@ -1,19 +1,18 @@
 # ignore everything in the root directory
 /*
 
+## root
 # zshrc
 !.zshrc
 # except .gitignore
 !.gitignore
-
 # tmux config
 !/.tmux.conf
 
-
-# .config
+## .config dir
 !/.config
 /.config/*
+# nvim
 !/.config/nvim
-
 # starship toml
 !/.config/starship.toml
