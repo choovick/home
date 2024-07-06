@@ -4,5 +4,11 @@
 # except .gitignore
 !.gitignore
 
-# .config/nvim
-!.config/nvim/*
+# tmux config
+!/.tmux.conf
+
+
+# .config
+!/.config
+/.config/*
+!/.config/nvim
