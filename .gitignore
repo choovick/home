@@ -1,6 +1,8 @@
 # ignore everything in the root directory
 /*
 
+# zshrc
+!.zshrc
 # except .gitignore
 !.gitignore
 
@@ -12,3 +14,6 @@
 !/.config
 /.config/*
 !/.config/nvim
+
+# starship toml
+!/.config/starship.toml
