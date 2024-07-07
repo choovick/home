@@ -38,7 +38,7 @@ opt.clipboard:append("unnamedplus") -- use system clipboard as default register
 opt.splitright = true -- split vertical window to the right
 opt.splitbelow = true -- split horizontal window to the bottom
 
--- turn off swapfile
+-- turn off swap file
 opt.swapfile = false
 
 -- change indents for markdown
@@ -61,3 +61,6 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 	end,
 })
 
+-- setting language to en_us
+vim.opt.spelllang = "en_us"
+vim.opt.spell = true
