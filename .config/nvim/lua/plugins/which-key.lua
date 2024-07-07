@@ -18,6 +18,9 @@ return {
 
 		wk.register({
 			-- group renames
+			a = {
+				name = "+actions",
+			},
 			e = {
 				name = "+explorer",
 			},

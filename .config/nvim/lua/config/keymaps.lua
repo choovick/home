@@ -7,9 +7,6 @@ local keymap = vim.keymap -- for conciseness
 -- use jk to exit insert mode
 keymap.set({ "i", "v" }, "jk", "<ESC>", { desc = "Exit insert mode with jk" })
 
--- clear search highlights
-keymap.set("n", "<leader>nh", ":nohl<CR>", { desc = "Clear search highlijkghts" })
-
 -- delete single character without copying into register
 keymap.set("n", "x", '"_x')
 
@@ -68,9 +65,78 @@ _G.change_to_git_root = function()
 end
 
 -- Keymap to trigger the function
-vim.api.nvim_set_keymap(
-	"n",
-	"<leader>er",
-	":lua change_to_git_root()<CR>",
-	{ noremap = true, silent = true, desc = "Change directory to git root" }
+-- vim.api.nvim_set_keymap(
+-- 	"n",
+-- 	"<leader>er",
+-- 	":lua change_to_git_root()<CR>",
+-- 	{ noremap = true, silent = true, desc = "Change directory to git root" }
+-- )
+--
+-- -- JSON unescape
+-- function _G.unescape_json()
+-- 	-- Get the current visual selection
+-- 	local start_pos = vim.fn.getpos("'<")
+-- 	local end_pos = vim.fn.getpos("'>")
+-- 	local lines = vim.fn.getline(start_pos[2], end_pos[2])
+-- 	local selection = table.concat(lines, "\n")
+--
+-- 	-- Run jq to un-escape the JSON string
+-- 	local handle = io.popen("echo " .. vim.fn.shellescape(selection) .. " | jq -R -r .")
+-- 	local result = handle:read("*a")
+-- 	handle:close()
+--
+-- 	-- Replace the visual selection with the result
+-- 	vim.fn.setline(start_pos[2], vim.split(result, "\n"))
+-- end
+--
+-- vim.api.nvim_set_keymap("v", "<leader>u", ":lua unescape_json()<CR>", { noremap = true, silent = true })
+
+-- ACTIONS
+-- clear search highlights
+keymap.set("n", "<leader>ah", ":nohl<CR>", { desc = "Clear search highlights" })
+
+-- to convert yaml to json using: yq -p yaml -o json
+keymap.set(
+	{ "v", "n" },
+	"<leader>aj",
+	":%!yq -p yaml -o json<CR>",
+	{ noremap = true, silent = true, desc = "Convert yaml to json" }
+)
+-- to convert json to yaml using: yq -p json -o yaml
+keymap.set(
+	{ "v", "n" },
+	"<leader>ay",
+	":%!yq -p json -o yaml<CR>",
+	{ noremap = true, silent = true, desc = "Convert json to yaml (Unminify JSON)" }
+)
+-- unescape json string using jq
+keymap.set(
+	{ "v", "n" },
+	"<leader>aE",
+	":%!jq -r .<CR>",
+	{ noremap = true, silent = true, desc = "Unescape JSON string" }
+)
+-- escape stining to json string using jq
+keymap.set(
+	{ "v", "n" },
+	"<leader>ae",
+	":%!jq -Rsa .<CR>",
+	{ noremap = true, silent = true, desc = "Escape string to JSON string" }
+)
+
+-- json minify using jq
+keymap.set({ "v", "n" }, "<leader>am", ":%!jq -c .<CR>", { noremap = true, silent = true, desc = "Minify JSON" })
+
+-- base64 encode using <leader>ab
+keymap.set({ "v", "n" }, "<leader>ab", ":%!base64<CR>", { noremap = true, silent = true, desc = "Base64 encode" })
+
+-- base64 decode using <leader>aB
+keymap.set({ "v", "n" }, "<leader>aB", ":%!base64 -d<CR>", { noremap = true, silent = true, desc = "Base64 decode" })
+
+-- use openssl to decode certifcate using: openssl x509 -in /dev/stdin -text -noout
+keymap.set(
+	{ "v", "n" },
+	"<leader>ac",
+	":%!openssl x509 -in /dev/stdin -text -noout<CR>",
+	{ noremap = true, silent = true, desc = "Decode certificate" }
 )
