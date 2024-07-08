@@ -22,10 +22,6 @@ keymap.set("n", "<leader>M", "<cmd>Mason<cr>", { desc = "Mason" })
 -- Trim
 keymap.set("n", "<leader>ct", "<cmd>Trim<cr>", { desc = "Trim Whitespaces" })
 
--- Peek
-keymap.set("n", "<leader>cp", "<cmd>PeekOpen<cr>", { desc = "Peek Open" })
-keymap.set("n", "<leader>cP", "<cmd>PeekClose<cr>", { desc = "Peek Close" })
-
 -- increment/decrement number
 keymap.set("n", "<leader>+", "<C-a>", { desc = "Increment number" }) -- increment
 keymap.set("n", "<leader>-", "<C-x>", { desc = "Decrement number" }) -- decrement
