@@ -67,7 +67,9 @@ export FZF_CTRL_R_OPTS="--preview 'echo {2..}'
 fcd() {
 	local folder="$1" # Get the folder name from the first argument
 	local selected_dir
-	selected_dir=$(fd --type d --maxdepth 15 \
+	# is second argument is provided, set no_ignore variable to --no-ignore
+	[[ -n "$2" ]] && local no_ignore="--no-ignore" || local no_ignore=""
+	selected_dir=$(fd --type d $no_ignore --maxdepth 15 \
   -E '.vscode*' \
   -E '.idea*' \
   -E 'Library/*' \
@@ -85,7 +87,7 @@ fcd() {
 
 }
 # Bind Ctrl+g to the fcd function with a folder of /dev/infrastructure
-bindkey -s '^g' 'fcd $HOME\n'
+bindkey -s '^g' 'fcd $HOME no-ignore\n'
 
 # Bind Ctrl+f to the fcd function with a folder of "dev"
 bindkey -s '^f' 'fcd $HOME/dev\n'
@@ -221,7 +223,7 @@ if [ "$TERM_PROGRAM" = "iTerm.app" ]; then
 				tmux new-window -d -t 4 -n "dev" -c "$HOME/dev"
 				tmux new-window -d -t 5 -n "infra" -c "$HOME/dev/"
 				tmux new-window -d -t 6 -n "temp" -c "$HOME/temp"
-				tmux new-window -d -t 6 -n "Downloads" -c "$HOME/Downloads"
+				tmux new-window -d -t 7 -n "Downloads" -c "$HOME/Downloads"
 				tmux new-window -d -t 9 -n "lexfx" -c "$HOME"
 				# attach to new session
 				tmux attach-session -t 0
