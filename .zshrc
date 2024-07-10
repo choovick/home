@@ -183,6 +183,9 @@ alias ll='colorls -lA --sd'
 
 # aws profile selector
 alias aws-profile='export AWS_PROFILE=$(sed -n "s/\[profile \(.*\)\]/\1/gp" ~/.aws/config | fzf)'
+# kubectl context selector
+alias kubectx='kubectl config get-contexts -o name | fzf | kubectl config use --context'
+
 
 # display
 alias display-restore='displayplacer "id:2997316B-A423-47EA-8390-865F1276C0E2 res:3440x1440 hz:100 color_depth:8 enabled:true scaling:off origin:(0,0) degree:0" "id:37D8832A-2D66-02CA-B9F7-8F30A301B230 res:1728x1117 hz:120 color_depth:8 enabled:true scaling:on origin:(-1728,323) degree:0" "id:33A9F171-8D5E-4A0A-8472-A882E0CEC299 res:1440x2560 hz:60 color_depth:8 enabled:true scaling:on origin:(3440,-466) degree:270"'

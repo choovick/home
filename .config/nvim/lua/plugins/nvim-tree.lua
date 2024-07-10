@@ -8,9 +8,10 @@ return {
 		vim.g.loaded_netrw = 1
 		vim.g.loaded_netrwPlugin = 1
 
+		-- https://github.com/nvim-tree/nvim-tree.lua/blob/master/lua/nvim-tree.lua#L342
 		nvimtree.setup({
 			view = {
-				width = 35,
+				width = 40,
 				relativenumber = true,
 			},
 			sync_root_with_cwd = true,
@@ -33,6 +34,7 @@ return {
 			-- window splits
 			actions = {
 				open_file = {
+					resize_window = true,
 					window_picker = {
 						enable = false,
 					},

@@ -61,12 +61,33 @@ _G.change_to_git_root = function()
 end
 
 -- Keymap to trigger the function
--- vim.api.nvim_set_keymap(
--- 	"n",
--- 	"<leader>er",
--- 	":lua change_to_git_root()<CR>",
--- 	{ noremap = true, silent = true, desc = "Change directory to git root" }
--- )
+vim.api.nvim_set_keymap(
+	"n",
+	"<leader>er",
+	":lua change_to_git_root()<CR>",
+	{ noremap = true, silent = true, desc = "Change directory to git root" }
+)
+
+-- Define a global function to change the current working directory to the directory of the current buffer
+_G.switch_cwd_to_current_buffer = function()
+	local buffer_name = vim.api.nvim_buf_get_name(0)
+	if buffer_name == "" then
+		print("No file in the current buffer")
+		return
+	end
+	local buffer_dir = vim.fn.fnamemodify(buffer_name, ":p:h")
+	vim.cmd("cd " .. buffer_dir)
+	print("Changed directory to " .. buffer_dir)
+end
+
+-- Keymap to call the global function (you can customize <leader>cd to your preferred key combination)
+vim.api.nvim_set_keymap(
+	"n",
+	"<leader>eb",
+	":lua _G.switch_cwd_to_current_buffer()<CR>",
+	{ noremap = true, silent = true, desc = "Change directory to current buffer" }
+)
+
 --
 -- -- JSON unescape
 -- function _G.unescape_json()
