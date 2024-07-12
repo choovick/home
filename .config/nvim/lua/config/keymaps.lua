@@ -25,32 +25,46 @@ keymap.set("n", "<leader>ct", "<cmd>Trim<cr>", { desc = "Trim Whitespaces" })
 -- increment/decrement number
 keymap.set("n", "<leader>+", "<C-a>", { desc = "Increment number" }) -- increment
 keymap.set("n", "<leader>-", "<C-x>", { desc = "Decrement number" }) -- decrement
--- neotree
-keymap.set("n", "<leader>ee", "<cmd>NvimTreeFocus<CR>", { desc = "Focus file explorer" }) -- toggle file explorer
-keymap.set("n", "<leader>ef", "<cmd>NvimTreeFindFileToggle<CR>", { desc = "Toggle file explorer on current file" }) -- toggle file explorer on current file
-keymap.set("n", "<leader>ec", "<cmd>NvimTreeCollapse<CR>", { desc = "Collapse file explorer" }) -- collapse file explorer
-keymap.set("n", "<leader>er", "<cmd>NvimTreeRefresh<CR>", { desc = "Refresh file explorer" }) -- refresh file explorer
 
--- window management
-keymap.set("n", "<leader>sv", "<C-w>v", { desc = "Split window vertically" }) -- split window vertically
-keymap.set("n", "<leader>sh", "<C-w>s", { desc = "Split window horizontally" }) -- split window horizontally
+-- WINDOW MANAGEMENT
+keymap.set("n", "<leader>sv", "<C-w>s", { desc = "Split window vertically" }) -- split window vertically
+keymap.set("n", "<leader>sh", "<C-w>v", { desc = "Split window horizontally" }) -- split window horizontally
 keymap.set("n", "<leader>se", "<C-w>=", { desc = "Make splits equal size" }) -- make split windows equal width & height
 keymap.set("n", "<leader>sx", "<cmd>close<CR>", { desc = "Close current split" }) -- close current split window
+keymap.set("n", "<leader>ss", "<C-x>", { desc = "Swap current window with next" }) -- swap window with next
 
-keymap.set("n", "<leader>to", "<cmd>tabnew<CR>", { desc = "Open new tab" }) -- open new tab
+keymap.set("n", "<leader>tN", "<cmd>tabnew<CR>", { desc = "Open new tab" }) -- open new tab
 keymap.set("n", "<leader>tx", "<cmd>tabclose<CR>", { desc = "Close current tab" }) -- close current tab
 keymap.set("n", "<leader>tn", "<cmd>tabn<CR>", { desc = "Go to next tab" }) --  go to next tab
 keymap.set("n", "<leader>tp", "<cmd>tabp<CR>", { desc = "Go to previous tab" }) --  go to previous tab
 keymap.set("n", "<leader>tf", "<cmd>tabnew %<CR>", { desc = "Open current buffer in new tab" }) --  move current buffer to new tab
 
--- quickfix
+-- QUICKFIX
 keymap.set("n", "<leader>qq", "<cmd>copen<CR>", { desc = "Open quickfix" }) -- open quickfix
 keymap.set("n", "<leader>qc", "<cmd>cclose<CR>", { desc = "Close quickfix" }) -- close quickfix
 keymap.set("n", "<leader>qn", "<cmd>cnext<CR>", { desc = "Go to next quickfix" }) -- go to next quickfix
 keymap.set("n", "<leader>qp", "<cmd>cprev<CR>", { desc = "Go to previous quickfix" }) -- go to previous quickfix
 
+-- NAVIGATION/FINDING
+keymap.set("n", "<leader>ff", "<cmd>Telescope find_files follow=true<cr>", { desc = "Fuzzy find files in cwd" })
+keymap.set("n", "<leader> ", "<cmd>Telescope find_files follow=true<cr>", { desc = "Fuzzy find files in cwd" })
+keymap.set("n", "<leader>fb", function()
+	require("telescope.builtin").find_files({ cwd = vim.fn.expand("%:p:h"), follow = true })
+end, { desc = "Fuzzy find files in current butter dir" })
+keymap.set("n", "<leader>fr", "<cmd>Telescope oldfiles follow=true<cr>", { desc = "Fuzzy find recent files" })
+-- keymap.set("n", "<leader>fs", "<cmd>Telescope live_grep<cr>", { desc = "Find string in cwd" })
+keymap.set("n", "<leader>fs", "<cmd>FzfLua live_grep_glob<cr>", { desc = "Live grep with rg --glob support" })
+keymap.set("n", "<leader>fS", "<cmd>Spectre<cr>", { desc = "Open Spectre for find and replace" })
+keymap.set("n", "<leader>fc", "<cmd>Telescope grep_string<cr>", { desc = "Find string under cursor in cwd" })
+keymap.set("n", "<leader>ft", "<cmd>TodoTelescope<cr>", { desc = "Find todos" })
+keymap.set("n", "<leader>fB", "<cmd>Telescope buffers<cr>", { desc = "Select Buffer" })
+keymap.set("n", "<leader>fl", "<cmd>FzfLua blines<cr>", { desc = "Search in current Buffer" })
+keymap.set("n", "<leader>fl", "<cmd>FzfLua lgrep_curbuf<cr>", { desc = "Live grep in current buffer" })
+
+-- EXPLORER
 -- Define a global function to change directory to git root
-_G.change_to_git_root = function()
+-- _G.change_to_git_root = function()
+vim.api.nvim_create_user_command("CwdGitRoot", function()
 	local git_root = vim.fn.systemlist("git rev-parse --show-toplevel")[1]
 	if git_root and git_root ~= "" then
 		vim.cmd("cd " .. git_root)
@@ -58,18 +72,18 @@ _G.change_to_git_root = function()
 	else
 		print("Not in a git repository")
 	end
-end
+end, { desc = "Change directory to git root" })
 
 -- Keymap to trigger the function
 vim.api.nvim_set_keymap(
 	"n",
-	"<leader>er",
-	":lua change_to_git_root()<CR>",
+	"<leader>eR",
+	":CwdGitRoot<CR>",
 	{ noremap = true, silent = true, desc = "Change directory to git root" }
 )
 
--- Define a global function to change the current working directory to the directory of the current buffer
-_G.switch_cwd_to_current_buffer = function()
+-- Define a custom function to change the current working directory to the directory of the current buffer
+vim.api.nvim_create_user_command("CwdCurrentBuffer", function()
 	local buffer_name = vim.api.nvim_buf_get_name(0)
 	if buffer_name == "" then
 		print("No file in the current buffer")
@@ -78,35 +92,21 @@ _G.switch_cwd_to_current_buffer = function()
 	local buffer_dir = vim.fn.fnamemodify(buffer_name, ":p:h")
 	vim.cmd("cd " .. buffer_dir)
 	print("Changed directory to " .. buffer_dir)
-end
+end, { desc = "Change directory to current buffer" })
 
 -- Keymap to call the global function (you can customize <leader>cd to your preferred key combination)
 vim.api.nvim_set_keymap(
 	"n",
-	"<leader>eb",
-	":lua _G.switch_cwd_to_current_buffer()<CR>",
+	"<leader>eB",
+	":CwdCurrentBuffer<CR>",
 	{ noremap = true, silent = true, desc = "Change directory to current buffer" }
 )
 
---
--- -- JSON unescape
--- function _G.unescape_json()
--- 	-- Get the current visual selection
--- 	local start_pos = vim.fn.getpos("'<")
--- 	local end_pos = vim.fn.getpos("'>")
--- 	local lines = vim.fn.getline(start_pos[2], end_pos[2])
--- 	local selection = table.concat(lines, "\n")
---
--- 	-- Run jq to un-escape the JSON string
--- 	local handle = io.popen("echo " .. vim.fn.shellescape(selection) .. " | jq -R -r .")
--- 	local result = handle:read("*a")
--- 	handle:close()
---
--- 	-- Replace the visual selection with the result
--- 	vim.fn.setline(start_pos[2], vim.split(result, "\n"))
--- end
---
--- vim.api.nvim_set_keymap("v", "<leader>u", ":lua unescape_json()<CR>", { noremap = true, silent = true })
+-- neotree
+keymap.set("n", "<leader>ee", "<cmd>NvimTreeFocus<CR>", { desc = "Focus file explorer" }) -- toggle file explorer
+keymap.set("n", "<leader>ef", "<cmd>NvimTreeFindFileToggle<CR>", { desc = "Toggle file explorer on current file" }) -- toggle file explorer on current file
+keymap.set("n", "<leader>ec", "<cmd>NvimTreeCollapse<CR>", { desc = "Collapse file explorer" }) -- collapse file explorer
+keymap.set("n", "<leader>er", "<cmd>NvimTreeRefresh<CR>", { desc = "Refresh file explorer" }) -- refresh file explorer
 
 -- ACTIONS
 -- clear search highlights
@@ -157,3 +157,54 @@ keymap.set(
 	":%!openssl x509 -in /dev/stdin -text -noout<CR>",
 	{ noremap = true, silent = true, desc = "Decode certificate" }
 )
+
+-- telescope diff
+vim.keymap.set("n", "<leader>aD", function()
+	require("telescope").extensions.diff.diff_files({ hidden = true })
+end, { desc = "Compare 2 files" })
+vim.keymap.set("n", "<leader>ad", function()
+	require("telescope").extensions.diff.diff_current({ hidden = true })
+end, { desc = "Compare file with current" })
+
+-- action to select all text leader aa
+keymap.set({ "v", "n" }, "<leader>aa", "ggVG", { noremap = true, silent = true, desc = "Select all text" })
+
+-- DIFFING HELPERS
+vim.api.nvim_create_user_command("DiffClip", function()
+	vim.cmd([[
+    let ft=&ft
+    leftabove vnew [Clipboard]
+    setlocal bufhidden=wipe buftype=nofile noswapfile
+    put +
+    0d_
+    " remove CR for Windows
+    silent %s/\r$//e
+    execute "set ft=" . ft
+    diffthis
+    wincmd p
+    diffthis
+  ]])
+end, { desc = "Compare Active File with Clipboard" })
+
+-- add <leader>aD to compare active file with clipboard
+keymap.set("n", "<leader>aD", ":DiffClip<CR>", { desc = "Compare Active File with Clipboard" })
+
+vim.api.nvim_create_user_command("DiffLastTwo", function()
+	local bufnr1 = vim.fn.bufnr("#")
+	local bufnr2 = vim.fn.bufnr("%")
+
+	if bufnr1 == -1 or bufnr2 == -1 then
+		print("No previous buffer found")
+		return
+	end
+
+	vim.cmd("tabnew") -- Open a new tab
+	vim.cmd("b " .. bufnr1) -- Switch to the previous buffer
+	vim.cmd("diffthis") -- Start diff mode for the previous buffer
+	vim.cmd("vsplit") -- Open a vertical split
+	vim.cmd("b " .. bufnr2) -- Switch to the current buffer
+	vim.cmd("diffthis") -- Start diff mode for the current buffer
+end, { desc = "Compare Last Two Buffers" })
+
+-- add <leader>ad to compare last two buffers
+keymap.set("n", "<leader>ad", ":DiffLastTwo<CR>", { desc = "Compare Last Two Buffers" })
