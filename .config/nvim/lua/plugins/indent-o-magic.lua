@@ -10,9 +10,14 @@ return {
 			max_lines = 0,
 		},
 
-		-- Only detect 4 spaces and tabs for Rust files
+		-- Bitbucket markdown files should use 3 spaces
 		filetype_markdown = {
-			standard_widths = { 4 },
+			standard_widths = { 3 },
+		},
+
+		-- shell scipts should use 2 spaces
+		filetype_sh = {
+			standard_widths = { 2 },
 		},
 
 		-- Don't detect 8 spaces indentations inside files without a filetype

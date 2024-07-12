@@ -42,6 +42,7 @@ return {
 				"stylua", -- lua formatter
 				"isort", -- python formatter
 				"black", -- python formatter
+				"shellcheck", -- shell script linter
 			},
 		})
 	end,

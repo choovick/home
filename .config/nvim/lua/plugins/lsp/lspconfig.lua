@@ -4,7 +4,7 @@ return {
 	dependencies = {
 		"hrsh7th/cmp-nvim-lsp",
 		{ "antosha417/nvim-lsp-file-operations", config = true },
-		{ "folke/neodev.nvim", opts = {} },
+		{ "folke/neodev.nvim",                   opts = {} },
 	},
 	config = function()
 		-- import lspconfig plugin
@@ -63,6 +63,17 @@ return {
 
 				opts.desc = "Restart LSP"
 				keymap.set("n", "<leader>rs", ":LspRestart<CR>", opts) -- mapping to restart lsp if necessary
+			end,
+		})
+
+		-- enable language server for bash https://github.com/bash-lsp/bash-language-server?tab=readme-ov-file#neovim
+		vim.api.nvim_create_autocmd("FileType", {
+			pattern = "sh",
+			callback = function()
+				vim.lsp.start({
+					name = "bash-language-server",
+					cmd = { "bash-language-server", "start" },
+				})
 			end,
 		})
 
@@ -128,6 +139,11 @@ return {
 							},
 						},
 					},
+				})
+
+				-- add handler for bash laguage server
+				lspconfig["bashls"].setup({
+					capabilities = capabilities,
 				})
 			end,
 		})
