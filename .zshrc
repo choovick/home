@@ -182,9 +182,9 @@ alias la='colorls -lA --sd'
 alias ll='colorls -lA --sd'
 
 # aws profile selector
-alias aws-profile='export AWS_PROFILE=$(sed -n "s/\[profile \(.*\)\]/\1/gp" ~/.aws/config | fzf)'
+alias aws-profile='export AWS_PROFILE=$(aws configure list-profiles | fzf)'
 # kubectl context selector
-alias kubectx='kubectl config get-contexts -o name | fzf | kubectl config use --context'
+alias kubectx='kubectl config use-context $(kubectl config get-contexts -o name | fzf)'
 
 
 # display
@@ -238,7 +238,7 @@ fi
 
 # TF autocomplete
 autoload -U +X bashcompinit && bashcompinit
-complete -o nospace -C /Users/sjc-lp03734/bin/terraform terraform
+complete -o nospace -C terraform terraform
 
 # Check if stern is installed if so enable completion
 [ -f $(which stern) ] && source <(stern --completion=zsh)
