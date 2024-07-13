@@ -14,46 +14,27 @@ return {
 		-- we'll document:
 		--  * <leader>fn new file
 		--  * <leader>fe edit file
-		-- and hide <leader>1
-
-		wk.register({
+		-- -- and hide <leader>1
+		--
+		wk.add({
 			-- group renames
-			a = {
-				name = "+actions",
-			},
-			e = {
-				name = "+explorer",
-			},
-			s = {
-				name = "+split",
-			},
-			h = {
-				name = "+harpoon",
-			},
-			t = {
-				name = "+tabs",
-			},
-			n = {
-				name = "+no",
-			},
-			f = {
-				name = "+find",
-			},
-			c = {
-				name = "+code",
-			},
-			x = {
-				name = "+diag",
-			},
-			w = {
-				name = "+window",
-			},
-			q = {
-				name = "+quickfix",
-			},
+			{ "<leader>a", group = "actions" },
+			{ "<leader>c", group = "code" },
+			{ "<leader>C", group = "CopilotChat" },
+			{ "<leader>e", group = "explorer" },
+			{ "<leader>f", group = "find" },
+			{ "<leader>h", group = "harpoon" },
+			{ "<leader>n", group = "no" },
+			{ "<leader>q", group = "quickfix" },
+			{ "<leader>s", group = "split" },
+			{ "<leader>t", group = "tabs" },
+			{ "<leader>w", group = "window" },
+			{ "<leader>x", group = "diag" },
 		}, { prefix = "<leader>" })
 	end,
 	opts = {
 		-- any additional options
+		-- show a warning when issues were detected with your mappings
+		notify = true,
 	},
 }
