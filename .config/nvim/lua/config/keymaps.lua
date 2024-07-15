@@ -208,3 +208,8 @@ end, { desc = "Compare Last Two Buffers" })
 
 -- add <leader>ad to compare last two buffers
 keymap.set("n", "<leader>ad", ":DiffLastTwo<CR>", { desc = "Compare Last Two Buffers" })
+
+-- override q: wiht FzfLua command_history
+keymap.set({ "n", "v" }, "q:", "<cmd>FzfLua command_history<cr>", { desc = "Command history" })
+-- leader : to open FzfLua commands
+keymap.set({ "n", "v" }, "<leader>:", "<cmd>FzfLua commands<cr>", { desc = "FzfLua commands" })
