@@ -216,22 +216,43 @@ keymap.set({ "n", "v" }, "q:", "<cmd>FzfLua command_history<cr>", { desc = "Comm
 -- leader : to open FzfLua commands
 keymap.set({ "n", "v" }, "<leader>:", "<cmd>FzfLua commands<cr>", { desc = "FzfLua commands" })
 
--- Create a new tmux pane with the current file's directory
-vim.api.nvim_create_user_command("TmuxNewPaneCurrentBuffDir", function()
-	local dir = vim.fn.expand("%:p:h")
-	if dir == "" then
-		print("Current buffer directory is empty")
+-- Create a new tmux pane with the current file's directory or current working directory
+vim.api.nvim_create_user_command("TmuxNewPaneDir", function(arg)
+	local argStr = arg.args
+	if not (argStr == "vc" or argStr == "hc" or argStr == "vb" or argStr == "hb") then
+		print(
+			"Invalid argument. Acceptable values are 'vc', 'hc', 'vb', 'hb'. 'v' or 'h' for vertical or horizontal split, 'c' or 'b' for current working directory or buffer directory."
+		)
 		return
 	end
-	local cmd = "tmux split-window -v -c " .. dir
-	os.execute(cmd)
+	local dir
+	local splitType = argStr:sub(1, 1) == "v" and "-v" or "-h" -- determine split type based on first letter
+	if argStr:sub(2, 2) == "c" then
+		dir = vim.fn.getcwd()
+	else
+		dir = vim.fn.expand("%:p:h")
+	end
+	if dir == "" then
+		print("Directory is empty")
+		return
+	end
+	-- Construct the tmux command
+	local tmuxCommand = string.format("tmux split-window %s -c %s", splitType, dir)
+	-- Execute the tmux command
+	os.execute(tmuxCommand)
 	print("Created new tmux pane in directory " .. dir)
-end, { desc = "Create a new tmux pane with the current file's directory" })
+end, { nargs = 1, desc = "Create a new tmux pane with the current file's directory or current working directory" })
 
--- Map the function to a key
-keymap.set(
-	{ "n", "v" },
-	"<leader>sV",
-	":TmuxNewPaneCurrentBuffDir<CR>",
-	{ noremap = true, silent = true, desc = "Create a new tmux pane vertically with the current buffer directory" }
-)
+-- sV to create a new tmux pane vertically with the current buffer directory or current working directory
+keymap.set({ "n", "v" }, "<leader>sV", ":TmuxNewPaneDir vb<CR>", {
+	noremap = true,
+	silent = true,
+	desc = "Create a new tmux pane vertically with the current buffer directory or current working directory",
+})
+
+-- sH to create a new tmux pane horizontally with the current buffer directory or current working directory
+keymap.set({ "n", "v" }, "<leader>sH", ":TmuxNewPaneDir hb<CR>", {
+	noremap = true,
+	silent = true,
+	desc = "Create a new tmux pane horizontally with the current buffer directory or current working directory",
+})
