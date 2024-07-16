@@ -12,6 +12,8 @@ keymap.set("n", "x", '"_x')
 
 -- save file command
 keymap.set({ "i", "x", "n", "s" }, "<C-s>", "<cmd>w<cr><esc>", { desc = "Save file" })
+-- bind fd to quit one
+keymap.set("n", "fd", "<cmd>q<cr>", { desc = "Quit" })
 
 -- Lazy hotkey
 keymap.set("n", "<leader>L", "<cmd>Lazy<cr>", { desc = "Lazy" })
@@ -46,9 +48,9 @@ keymap.set("n", "<leader>qn", "<cmd>cnext<CR>", { desc = "Go to next quickfix" }
 keymap.set("n", "<leader>qp", "<cmd>cprev<CR>", { desc = "Go to previous quickfix" }) -- go to previous quickfix
 
 -- NAVIGATION/FINDING
-keymap.set("n", "<leader>ff", "<cmd>Telescope find_files follow=true<cr>", { desc = "Fuzzy find files in cwd" })
+-- keymap.set("n", "<leader>ff", "<cmd>Telescope find_files follow=true<cr>", { desc = "Fuzzy find files in cwd" })
 keymap.set("n", "<leader> ", "<cmd>Telescope find_files follow=true<cr>", { desc = "Fuzzy find files in cwd" })
-keymap.set("n", "<leader>fb", function()
+keymap.set("n", "<leader>ff", function()
 	require("telescope.builtin").find_files({ cwd = vim.fn.expand("%:p:h"), follow = true })
 end, { desc = "Fuzzy find files in current butter dir" })
 keymap.set("n", "<leader>fr", "<cmd>Telescope oldfiles follow=true<cr>", { desc = "Fuzzy find recent files" })

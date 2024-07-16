@@ -15,12 +15,16 @@ plugins=(
 	fzf-tab
 	zsh-syntax-highlighting
 	ohmyzsh-full-autoupdate
+	zsh-vi-mode
 )
 
 source $ZSH/oh-my-zsh.sh
 
 # enable vi mode
 bindkey -v
+ZVM_VI_INSERT_ESCAPE_BINDKEY=jk
+# Append a command directly to fix fzf compatibility
+zvm_after_init_commands+=('[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh')
 
 # ZSH fix slow paste
 zstyle ':bracketed-paste-magic' active-widgets '.self-*'
@@ -61,7 +65,7 @@ export FZF_CTRL_R_OPTS="--preview 'echo {2..}'
   --bind 'ctrl-y:execute-silent(echo -n {2..} | pbcopy)+abort'
   --color header:italic
   --height 60%
-  --header 'Press CTRL-Y to copy command into clipboard'"
+  --header 'Press CTRL-Y to copy ucommand into clipboard'"
 
 # this will search dev folders with some ingnores
 fcd() {
