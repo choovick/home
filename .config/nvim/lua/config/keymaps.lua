@@ -59,7 +59,7 @@ keymap.set("n", "<leader>fs", "<cmd>FzfLua live_grep_glob<cr>", { desc = "Live g
 keymap.set("n", "<leader>fS", "<cmd>Spectre<cr>", { desc = "Open Spectre for find and replace" })
 keymap.set("n", "<leader>fc", "<cmd>Telescope grep_string<cr>", { desc = "Find string under cursor in cwd" })
 keymap.set("n", "<leader>ft", "<cmd>TodoTelescope<cr>", { desc = "Find todos" })
-keymap.set("n", "<leader>fB", "<cmd>Telescope buffers<cr>", { desc = "Select Buffer" })
+keymap.set("n", "<leader>fb", "<cmd>Telescope buffers<cr>", { desc = "Select Buffer" })
 keymap.set("n", "<leader>fl", "<cmd>FzfLua blines<cr>", { desc = "Search in current Buffer" })
 keymap.set("n", "<leader>fl", "<cmd>FzfLua lgrep_curbuf<cr>", { desc = "Live grep in current buffer" })
 
@@ -215,3 +215,23 @@ keymap.set("n", "<leader>ad", ":DiffLastTwo<CR>", { desc = "Compare Last Two Buf
 keymap.set({ "n", "v" }, "q:", "<cmd>FzfLua command_history<cr>", { desc = "Command history" })
 -- leader : to open FzfLua commands
 keymap.set({ "n", "v" }, "<leader>:", "<cmd>FzfLua commands<cr>", { desc = "FzfLua commands" })
+
+-- Create a new tmux pane with the current file's directory
+vim.api.nvim_create_user_command("TmuxNewPaneCurrentBuffDir", function()
+	local dir = vim.fn.expand("%:p:h")
+	if dir == "" then
+		print("Current buffer directory is empty")
+		return
+	end
+	local cmd = "tmux split-window -v -c " .. dir
+	os.execute(cmd)
+	print("Created new tmux pane in directory " .. dir)
+end, { desc = "Create a new tmux pane with the current file's directory" })
+
+-- Map the function to a key
+keymap.set(
+	{ "n", "v" },
+	"<leader>sV",
+	":TmuxNewPaneCurrentBuffDir<CR>",
+	{ noremap = true, silent = true, desc = "Create a new tmux pane vertically with the current buffer directory" }
+)
