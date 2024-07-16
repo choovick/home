@@ -32,7 +32,8 @@ return {
 					require("CopilotChat.integrations.fzflua").pick(actions.prompt_actions())
 				end,
 				desc = "CopilotChat - Prompt actions",
-			}, -- Quick chat with Copilot
+			},
+			-- Quick chat with Copilot
 			{
 				"<leader>Cq",
 				function()
@@ -42,6 +43,14 @@ return {
 					end
 				end,
 				desc = "CopilotChat - Quick chat",
+			},
+			-- Toggle CopilotChat
+			{
+				"<leader>Ct",
+				function()
+					require("CopilotChat").toggle()
+				end,
+				desc = "CopilotChat - Toggle",
 			},
 		},
 	},
