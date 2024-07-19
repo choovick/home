@@ -4,6 +4,9 @@ vim.g.mapleader = " "
 -- set keymaps
 local keymap = vim.keymap -- for conciseness
 
+-- to prevent paste over visual selection to copy to clipboard
+vim.api.nvim_set_keymap("v", "p", '"_dP', { noremap = true, silent = true })
+
 -- use jk to exit insert mode
 keymap.set({ "i", "v" }, "jk", "<ESC>", { desc = "Exit insert mode with jk" })
 
