@@ -8,8 +8,24 @@ return {
 		vim.g.loaded_netrw = 1
 		vim.g.loaded_netrwPlugin = 1
 
+		local function my_on_attach(bufnr)
+			local api = require("nvim-tree.api")
+
+			local function opts(desc)
+				return { desc = "nvim-tree: " .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
+			end
+
+			api.config.mappings.default_on_attach(bufnr)
+
+			-- your removals and mappings go here
+			vim.keymap.del("n", "f", { buffer = bufnr })
+			-- remap the default keybindings
+			vim.keymap.set("n", "C-f", api.live_filter.start, opts("Live Filter: Start"))
+		end
+
 		-- https://github.com/nvim-tree/nvim-tree.lua/blob/master/lua/nvim-tree.lua#L342
 		nvimtree.setup({
+			on_attach = my_on_attach,
 			view = {
 				width = 40,
 				relativenumber = true,
