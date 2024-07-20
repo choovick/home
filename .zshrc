@@ -15,16 +15,15 @@ plugins=(
 	fzf-tab
 	zsh-syntax-highlighting
 	ohmyzsh-full-autoupdate
-	zsh-vi-mode
+	vi-mode
 )
 
 source $ZSH/oh-my-zsh.sh
 
 # enable vi mode
 bindkey -v
-ZVM_VI_INSERT_ESCAPE_BINDKEY=jk
-# Append a command directly to fix fzf compatibility
-zvm_after_init_commands+=('[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh')
+# enable escape on jk in insert mode
+bindkey -M viins 'jk' vi-cmd-mode
 
 # ZSH fix slow paste
 zstyle ':bracketed-paste-magic' active-widgets '.self-*'
