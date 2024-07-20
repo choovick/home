@@ -5,6 +5,7 @@ return {
 		"hrsh7th/cmp-nvim-lsp",
 		{ "antosha417/nvim-lsp-file-operations", config = true },
 		{ "folke/neodev.nvim", opts = {} },
+		{ "towolf/vim-helm" },
 	},
 	config = function()
 		-- import lspconfig plugin
@@ -94,6 +95,14 @@ return {
 				["helm-ls"] = {
 					yamlls = {
 						path = "yaml-language-server",
+						config = {
+							schemas = {
+								kubernetes = "**/templates/**",
+							},
+							completion = true,
+							hover = true,
+							-- any other config from https://github.com/redhat-developer/yaml-language-server#language-server-settings
+						},
 					},
 				},
 			},

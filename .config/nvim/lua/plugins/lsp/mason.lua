@@ -33,7 +33,7 @@ return {
 				"lua_ls",
 				"graphql",
 				"terraformls",
-				"helm-ls",
+				"helm_ls",
 			},
 		})
 
