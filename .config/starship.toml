@@ -43,7 +43,7 @@ $aws\
 [](fg:yellow bg:sapphire)\
 $kubernetes\
 [](fg:sapphire bg:purple)\
-$time\
+$cmd_duration\
 [ ](fg:purple)\
 $line_break$character"""
 
@@ -58,6 +58,10 @@ vimcmd_replace_one_symbol = '[](bold fg:purple)'
 vimcmd_replace_symbol = '[](bold fg:purple)'
 vimcmd_visual_symbol = '[](bold fg:lavender)'
 
+[cmd_duration]
+min_time = 500
+style = "bg:peach"
+format = '[[  $duration ](fg:mantle bg:purple)]($style)'
 
 [palettes.gruvbox_dark]
 color_fg0 = '#fbf1c7'
