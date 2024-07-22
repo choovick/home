@@ -19,7 +19,7 @@ local function mode_overrides(appearance)
 		}
 	end
 end
-wezterm.on("window-config-reloaded", function(window, pane)
+wezterm.on("window-config-reloaded", function(window, _)
 	local overrides = window:get_config_overrides() or {}
 	local appearance = window:get_appearance()
 	local overrides_appearance = mode_overrides(appearance)
@@ -33,9 +33,14 @@ wezterm.on("window-config-reloaded", function(window, pane)
 	end
 end)
 --/ dynamic color scheme switching
-config.window_decorations = "TITLE | RESIZE"
+config.window_decorations = "RESIZE" -- "TITLE | RESIZE"
 config.enable_tab_bar = false
--- increase contrast
+config.window_padding = {
+	left = 0,
+	right = 0,
+	top = 0,
+	bottom = 0,
+}
 
 -- config.colors = {}
 
