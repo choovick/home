@@ -73,6 +73,9 @@ export FZF_CTRL_R_OPTS="--preview 'echo {2..}'
   --height 60%
   --header 'Press CTRL-Y to copy ucommand into clipboard'"
 
+# check is zoxide is install and source it
+[ -f $(which zoxide) ] && eval "$(zoxide init zsh)" && alias cd='z'
+
 # this will search dev folders with some ingnores
 fcd() {
 	local folder="$1" # Get the folder name from the first argument
