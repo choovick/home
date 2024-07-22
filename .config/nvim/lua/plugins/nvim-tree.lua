@@ -45,6 +45,13 @@ return {
 					},
 				},
 			},
+			tab = {
+				sync = {
+					open = true,
+					close = true,
+					ignore = {},
+				},
+			},
 			-- disable window_picker for
 			-- explorer to work well with
 			-- window splits

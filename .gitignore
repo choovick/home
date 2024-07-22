@@ -9,6 +9,9 @@
 # tmux config
 !/.tmux.conf
 
+# wezterm
+!/.wezterm.lua
+
 ## .config dir
 !/.config
 /.config/*

@@ -24,6 +24,8 @@ source $ZSH/oh-my-zsh.sh
 bindkey -v
 # enable escape on jk in insert mode
 bindkey -M viins 'jk' vi-cmd-mode
+# https://github.com/mcornella/ohmyzsh/blob/master/plugins/vi-mode/README.md
+VI_MODE_SET_CURSOR=true
 
 # ZSH fix slow paste
 zstyle ':bracketed-paste-magic' active-widgets '.self-*'
@@ -34,6 +36,11 @@ setopt +o nomatch
 # ZSH big history
 export HISTFILESIZE=1000000000
 export HISTSIZE=1000000000
+setopt hist_expire_dups_first
+setopt hist_ignore_dups
+setopt hist_verify
+
+
 
 # ZSH do not add to history if things start with space
 setopt HIST_IGNORE_SPACE
@@ -181,8 +188,16 @@ alias tf="terraform"
 alias tfo='terraform output -json | jq "reduce to_entries[] as \$entry ({}; .[\$entry.key] = \$entry.value.value)"'
 alias n="nvim ."
 
-alias la='colorls -lA --sd'
-alias ll='colorls -lA --sd'
+
+# check if eza is installed start code block
+if [ -f $(which eza) ]; then
+	# eza is installed
+	alias ls="eza --icons=auto"
+fi
+
+alias la='ls -lah'
+alias ll='ls -lah'
+
 
 # aws profile selector
 alias aws-profile='export AWS_PROFILE=$(aws configure list-profiles | fzf)'
@@ -211,7 +226,7 @@ bindkey "\e\eOC" end-of-line
 source "${ZSH_CUSTOM:-~/.zsh}/plugins/zsh-system-clipboard/zsh-system-clipboard.zsh"
 
 # check if $TERM_PROGRAM == iTerm.app variable set to identify terminal
-if [ "$TERM_PROGRAM" = "iTerm.app" ]; then
+if [ "$TERM_PROGRAM" = "iTerm.app" ] ||  [ "$TERM_PROGRAM" = "WezTerm" ] ; then
 	# tmux process detection, only go here is we are not in tmux
 	if [ "$TMUX" = "" ]; then
 		if [ -n "$NVIM_LISTEN_ADDRESS" ]; then
