@@ -45,7 +45,10 @@ config.window_padding = {
 -- config.colors = {}
 
 -- background blur
-config.window_background_opacity = 0.95
+config.window_background_opacity = 0.90
 config.macos_window_background_blur = 10
+
+-- dont confirm on exit
+config.window_close_confirmation = "NeverPrompt"
 
 return config

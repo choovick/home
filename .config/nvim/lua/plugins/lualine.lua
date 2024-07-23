@@ -3,7 +3,9 @@ return {
 	dependencies = {
 		{ "nvim-lua/plenary.nvim" },
 		{ "kyazdani42/nvim-web-devicons" },
+		{ "cormacrelf/dark-notify" },
 	},
+	lazy = false,
 	config = function()
 		local lualine = require("lualine")
 		local lazy_status = require("lazy.status") -- to configure lazy pending updates count
@@ -11,7 +13,7 @@ return {
 		-- configure lualine with modified theme
 		lualine.setup({
 			options = {
-				theme = "auto",
+				theme = "gruvbox",
 			},
 			sections = {
 				lualine_c = {
