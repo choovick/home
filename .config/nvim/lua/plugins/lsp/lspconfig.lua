@@ -42,7 +42,7 @@ return {
 				keymap.set("n", "gi", "<cmd>FzfLua lsp_implementations<CR>", opts)
 
 				opts.desc = "Show LSP type definitions"
-				keymap.set("n", "gt", "<cmd>FzfLua lsp_type_definitions<CR>", opts)
+				keymap.set("n", "gt", "<cmd>FzfLua lsp_definitions<CR>", opts)
 
 				opts.desc = "See available code actions"
 				keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, opts)
@@ -66,7 +66,7 @@ return {
 				keymap.set("n", "]d", vim.diagnostic.goto_next, opts)
 
 				opts.desc = "Restart LSP"
-				keymap.set("n", "<leader>rs", ":LspRestart<CR>", opts)
+				keymap.set("n", "<leader>R", ":LspRestart<CR>", opts)
 			end,
 		})
 

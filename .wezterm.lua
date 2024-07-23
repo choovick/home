@@ -35,6 +35,8 @@ end)
 --/ dynamic color scheme switching
 config.window_decorations = "RESIZE" -- "TITLE | RESIZE"
 config.enable_tab_bar = false
+config.use_fancy_tab_bar = false
+
 config.window_padding = {
 	left = 0,
 	right = 0,
