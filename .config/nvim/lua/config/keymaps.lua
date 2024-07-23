@@ -56,7 +56,11 @@ keymap.set("n", "<leader> ", "<cmd>Telescope find_files follow=true<cr>", { desc
 keymap.set("n", "<leader>ff", function()
 	require("telescope.builtin").find_files({ cwd = vim.fn.expand("%:p:h"), follow = true })
 end, { desc = "Fuzzy find files in current butter dir" })
-keymap.set("n", "<leader>fr", "<cmd>Telescope oldfiles follow=true<cr>", { desc = "Fuzzy find recent files" })
+
+keymap.set("n", "<leader>fr", function()
+	require("fzf-lua").oldfiles({ cwd_only = true })
+end, { desc = "Old files in current dir" })
+keymap.set("n", "<leader>fR", "<cmd>Telescope oldfiles follow=true<cr>", { desc = "Fuzzy find recent files" })
 -- keymap.set("n", "<leader>fs", "<cmd>Telescope live_grep<cr>", { desc = "Find string in cwd" })
 keymap.set("n", "<leader>fs", "<cmd>FzfLua live_grep_glob<cr>", { desc = "Live grep with rg --glob support" })
 keymap.set("n", "<leader>fS", "<cmd>Spectre<cr>", { desc = "Open Spectre for find and replace" })

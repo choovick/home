@@ -12,9 +12,12 @@ return {
 					["CTRL-q"] = "select-all+accept",
 				},
 			},
-			fullscreen = true,
-			preview = {
-				default = "bat",
+			winopts = {
+				fullscreen = true,
+				preview = {
+					-- default = "bat",
+					horizontal = "right:40%",
+				},
 			},
 		})
 	end,
