@@ -42,5 +42,11 @@ return {
 				},
 			},
 		})
+
+		-- Delay the execution of the update function by 1 second
+		vim.defer_fn(function()
+			-- run command: lua require('dark_notify').update()
+			require("dark_notify").update()
+		end, 1000)
 	end,
 }

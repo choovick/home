@@ -61,6 +61,17 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 	end,
 })
 
+-- delayed VimEnter function in case need something
+-- vim.api.nvim_create_autocmd({ "VimEnter" }, {
+-- 	callback = function()
+-- 		-- Delay the execution of the update function by 1 second
+-- 		vim.defer_fn(function()
+-- 			-- to fix the issue with lualine picking theme based on system appearance.
+-- 			print("Vim entered")
+-- 		end, 1000)
+-- 	end,
+-- })
+
 -- setting language to en_us
 vim.opt.spelllang = "en_us"
 vim.opt.spell = true
