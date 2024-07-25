@@ -12,6 +12,9 @@ return {
 					["CTRL-q"] = "select-all+accept",
 				},
 			},
+			grep = {
+				rg_opts = "--follow --column --line-number --no-heading --color=always --smart-case --max-columns=4096 -e",
+			},
 			winopts = {
 				fullscreen = true,
 				preview = {

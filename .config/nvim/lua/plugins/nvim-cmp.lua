@@ -2,8 +2,8 @@ return {
 	"hrsh7th/nvim-cmp",
 	event = "InsertEnter",
 	dependencies = {
-
-		"hrsh7th/cmp-path", -- source for file system paths
+		-- source for file system paths
+		"hrsh7th/cmp-path",
 		{
 			"L3MON4D3/LuaSnip",
 			-- follow latest release.
@@ -11,9 +11,16 @@ return {
 			-- install jsregexp (optional!).
 			build = "make install_jsregexp",
 		},
-		"saadparwaiz1/cmp_luasnip", -- for autocompletion
-		"rafamadriz/friendly-snippets", -- useful snippets
-		"onsails/lspkind.nvim", -- vs-code like pictograms
+		-- for autocompletion
+		"saadparwaiz1/cmp_luasnip",
+		-- useful snippets
+		"rafamadriz/friendly-snippets",
+		-- vs-code like pictograms
+		"onsails/lspkind.nvim",
+		--  commandline completion
+		"hrsh7th/cmp-cmdline",
+		-- buffer source
+		"hrsh7th/cmp-buffer",
 	},
 	config = function()
 		local cmp = require("cmp")
@@ -91,6 +98,28 @@ return {
 					ellipsis_char = "...",
 					symbol_map = { Copilot = "" },
 				}),
+			},
+		})
+
+		-- `:` cmdline setup.
+		cmp.setup.cmdline(":", {
+			mapping = cmp.mapping.preset.cmdline(),
+			sources = cmp.config.sources({
+				{ name = "path" },
+			}, {
+				{
+					name = "cmdline",
+					option = {
+						ignore_cmds = { "Man", "!" },
+					},
+				},
+			}),
+		})
+		-- `/` cmdline setup.
+		cmp.setup.cmdline("/", {
+			mapping = cmp.mapping.preset.cmdline(),
+			sources = {
+				{ name = "buffer" },
 			},
 		})
 	end,

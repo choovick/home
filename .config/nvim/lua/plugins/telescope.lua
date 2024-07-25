@@ -18,6 +18,20 @@ return {
 		local open_with_trouble = require("trouble.sources.telescope").open
 		telescope.setup({
 			defaults = {
+				vimgrep_arguments = {
+					-- all required except `--smart-case`
+					"rg",
+					"--color=never",
+					"--no-heading",
+					"--with-filename",
+					"--line-number",
+					"--column",
+					"--smart-case",
+
+					-- add your options
+					"--follow",
+				},
+
 				-- path_display = { "smart" },
 				mappings = {
 					i = {
