@@ -2,7 +2,7 @@ local wezterm = require("wezterm")
 local config = {}
 
 -- font
-config.font = wezterm.font("Hack Nerd Font Mono", {})
+config.font = wezterm.font("Hack Nerd Font Propo", {})
 config.font_size = 16
 
 -- dynamic color scheme switching
