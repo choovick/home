@@ -1,6 +1,7 @@
 -- https://github.com/lewis6991/gitsigns.nvim?tab=readme-ov-file#installation--usage
 return {
 	"lewis6991/gitsigns.nvim",
+	event = { "BufReadPre", "BufNewFile" },
 	opts = {},
 	keys = {
 		{ "<leader>cp", "<cmd>Gitsigns preview_hunk<cr>", desc = "Preview hunk" },
