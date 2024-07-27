@@ -38,7 +38,7 @@ return {
 					end
 
 					-- open grug-far with the path
-					require("grug-far").grug_far({
+					require("grug-far").toggle_instance({
 						prefills = {
 							search = "",
 							replacement = "",
@@ -46,7 +46,9 @@ return {
 							flags = "",
 							paths = path,
 						},
-						{ transient = true },
+						-- { transient = true },
+						instanceName = "far",
+						staticTitle = "Find and Replace",
 					})
 				end
 			end, opts("Search in directory"))
