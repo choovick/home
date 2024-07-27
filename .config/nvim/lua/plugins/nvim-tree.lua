@@ -10,6 +10,7 @@ return {
 
 		local function my_on_attach(bufnr)
 			local api = require("nvim-tree.api")
+			local lib = require("nvim-tree.lib")
 
 			local function opts(desc)
 				return { desc = "nvim-tree: " .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
@@ -21,6 +22,34 @@ return {
 			vim.keymap.del("n", "f", { buffer = bufnr })
 			-- remap the default keybindings
 			vim.keymap.set("n", "\\", api.live_filter.start, opts("Live Filter: Start"))
+
+			-- add custom key mapping
+			vim.keymap.set("n", "z", function()
+				local node = lib.get_node_at_cursor()
+				if node then
+					-- get directory of current file if it's a file
+					local path
+					if node.type == "directory" then
+						-- Keep the full path for directories
+						path = node.absolute_path
+					else
+						-- Get the directory of the file
+						path = vim.fn.fnamemodify(node.absolute_path, ":h")
+					end
+
+					-- open grug-far with the path
+					require("grug-far").grug_far({
+						prefills = {
+							search = "",
+							replacement = "",
+							filesFilter = "",
+							flags = "",
+							paths = path,
+						},
+						{ transient = true },
+					})
+				end
+			end, opts("Search in directory"))
 		end
 
 		-- https://github.com/nvim-tree/nvim-tree.lua/blob/master/lua/nvim-tree.lua#L342
