@@ -66,18 +66,53 @@ end, { desc = "Old files in current dir" })
 keymap.set("n", "<leader>fR", function()
 	require("fzf-lua").oldfiles()
 end, { desc = "Fuzzy find recent files across sessions" })
--- keymap.set("n", "<leader>fs", "<cmd>Telescope live_grep<cr>", { desc = "Find string in cwd" })
+
 keymap.set("n", "<leader>fs", "<cmd>FzfLua live_grep_glob<cr>", { desc = "Live grep with rg --glob support" })
 keymap.set("n", "<leader>fd", function()
 	require("fzf-lua").live_grep_glob({ cwd = vim.fn.expand("%:p:h") })
 end, { desc = "Live grep in current buffer directory" })
-keymap.set("n", "<leader>fS", "<cmd>Spectre<cr>", { desc = "Open Spectre for find and replace" })
 keymap.set("n", "<leader>fc", "<cmd>FzfLua grep_cword<cr>", { desc = "Find string under cursor in cwd" })
+keymap.set("n", "<leader>fl", "<cmd>FzfLua lgrep_curbuf<cr>", { desc = "Live grep in current buffer" })
+
+keymap.set("n", "<leader>fa", function()
+	require("grug-far").toggle_instance({ instanceName = "far", staticTitle = "Find and Replace" })
+end, { desc = "Open GrugFar for find and replace" })
+
+keymap.set("v", "<leader>fA", function()
+	-- get content of visual selection
+	local selection = vim.fn.getreg("v")
+
+	require("grug-far").grug_far({
+		prefills = {
+			search = selection,
+			replacement = "",
+			filesFilter = "",
+			flags = "",
+			paths = vim.fn.expand("%:p:h"),
+		},
+		{ transient = true },
+	})
+end, { desc = "Open GrugFar for find and replace selection in current buffer dir" })
+
+keymap.set("v", "<leader>fa", function()
+	-- get content of visual selection
+	local selection = vim.fn.getreg("v")
+
+	require("grug-far").grug_far({
+		prefills = {
+			search = selection,
+			replacement = "",
+			filesFilter = "",
+			flags = "",
+			paths = "",
+		},
+		{ transient = true },
+	})
+end, { desc = "Open GrugFar for find and replace" })
+
 keymap.set("n", "<leader>ft", "<cmd>TodoTelescope<cr>", { desc = "Find todos" })
--- keymap.set("n", "<leader>fb", "<cmd>Telescope buffers<cr>", { desc = "Select Buffer" })
 keymap.set("n", "<leader>fb", "<cmd>FzfLua buffers<cr>", { desc = "Select Buffer" })
 keymap.set("n", "<leader>fl", "<cmd>FzfLua blines<cr>", { desc = "Search in current Buffer" })
-keymap.set("n", "<leader>fl", "<cmd>FzfLua lgrep_curbuf<cr>", { desc = "Live grep in current buffer" })
 
 -- EXPLORER
 -- Define a global function to change directory to git root

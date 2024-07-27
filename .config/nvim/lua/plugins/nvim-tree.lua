@@ -20,7 +20,7 @@ return {
 			-- your removals and mappings go here
 			vim.keymap.del("n", "f", { buffer = bufnr })
 			-- remap the default keybindings
-			vim.keymap.set("n", "C-f", api.live_filter.start, opts("Live Filter: Start"))
+			vim.keymap.set("n", "\\", api.live_filter.start, opts("Live Filter: Start"))
 		end
 
 		-- https://github.com/nvim-tree/nvim-tree.lua/blob/master/lua/nvim-tree.lua#L342
