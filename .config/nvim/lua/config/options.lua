@@ -8,11 +8,14 @@ opt.number = true -- shows absolute line number on cursor line (when relative nu
 -- disable line wrapping by default
 opt.wrap = false
 vim.api.nvim_create_autocmd("FileType", {
-	pattern = { "markdown" },
-	callback = function()
-		vim.opt.wrap = true
-	end,
+  pattern = { "markdown" },
+  callback = function()
+    vim.opt.wrap = true
+  end,
 })
+
+-- see non printable characters
+opt.list = true
 
 -- tabs & indentation
 opt.tabstop = 2 -- 2 spaces for tabs (prettier default)
@@ -49,22 +52,22 @@ opt.swapfile = false
 
 -- change indents for markdown
 vim.api.nvim_create_autocmd("FileType", {
-	pattern = "markdown",
-	callback = function()
-		vim.opt.shiftwidth = 4
-		vim.opt.tabstop = 4
-	end,
+  pattern = "markdown",
+  callback = function()
+    vim.opt.shiftwidth = 4
+    vim.opt.tabstop = 4
+  end,
 })
 
 -- Highlight on yank
 local function augroup(name)
-	return vim.api.nvim_create_augroup("lazyvim_" .. name, { clear = true })
+  return vim.api.nvim_create_augroup("lazyvim_" .. name, { clear = true })
 end
 vim.api.nvim_create_autocmd("TextYankPost", {
-	group = augroup("highlight_yank"),
-	callback = function()
-		vim.highlight.on_yank()
-	end,
+  group = augroup("highlight_yank"),
+  callback = function()
+    vim.highlight.on_yank()
+  end,
 })
 
 -- delayed VimEnter function in case need something

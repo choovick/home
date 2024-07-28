@@ -1,4 +1,4 @@
 return {
-	"kevinhwang91/nvim-bqf",
-	opts = {},
+  "kevinhwang91/nvim-bqf",
+  opts = {},
 }
