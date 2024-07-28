@@ -6,6 +6,8 @@
 !.zshrc
 # except .gitignore
 !.gitignore
+# stylua
+!.stylua.toml
 # tmux config
 !/.tmux.conf
 
