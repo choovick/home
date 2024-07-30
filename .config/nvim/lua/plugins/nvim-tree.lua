@@ -23,9 +23,10 @@ return {
       -- remap the default keybindings
       vim.keymap.set("n", "\\", api.live_filter.start, opts("Live Filter: Start"))
 
-      -- add custom key mapping
+      -- add custom key mapping to search in directory
       vim.keymap.set("n", "z", function()
         local node = lib.get_node_at_cursor()
+        local grugFar = require("grug-far")
         if node then
           -- get directory of current file if it's a file
           local path
@@ -37,19 +38,26 @@ return {
             path = vim.fn.fnamemodify(node.absolute_path, ":h")
           end
 
-          -- open grug-far with the path
-          require("grug-far").toggle_instance({
-            prefills = {
-              search = "",
-              replacement = "",
-              filesFilter = "",
-              flags = "",
-              paths = path,
-            },
-            -- { transient = true },
-            instanceName = "far",
-            staticTitle = "Find and Replace",
-          })
+          -- for macos replace all spaces in the path with "\ "
+          if vim.fn.has("mac") == 1 then
+            path = path:gsub(" ", "\\ ")
+          end
+
+          local prefills = {
+            paths = path,
+          }
+
+          if not grugFar.has_instance("tree") then
+            grugFar.grug_far({
+              instanceName = "tree",
+              prefills = prefills,
+              staticTitle = "Find and Replace from Tree",
+            })
+          else
+            grugFar.open_instance("tree")
+            -- updating the prefills without clearing the search
+            grugFar.update_instance_prefills("tree", prefills, false)
+          end
         end
       end, opts("Search in directory"))
     end

@@ -248,7 +248,7 @@ if [ "$TERM_PROGRAM" = "iTerm.app" ] ||  [ "$TERM_PROGRAM" = "WezTerm" ] ; then
 				tmux new-window -d -t 5 -n "infra" -c "$HOME/dev/"
 				tmux new-window -d -t 6 -n "temp" -c "$HOME/temp"
 				tmux new-window -d -t 7 -n "Downloads" -c "$HOME/Downloads"
-				tmux new-window -d -t 9 -n "ledfx" -c "$HOME"
+				tmux new-window -d -t 9 -n "last" -c "$HOME"
 				# attach to new session
 				tmux attach-session -t 0
 			fi
