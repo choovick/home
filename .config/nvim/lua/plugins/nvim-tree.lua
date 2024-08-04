@@ -47,16 +47,16 @@ return {
             paths = path,
           }
 
-          if not grugFar.has_instance("tree") then
+          if not grugFar.has_instance("far") then
             grugFar.grug_far({
-              instanceName = "tree",
+              instanceName = "far",
               prefills = prefills,
               staticTitle = "Find and Replace from Tree",
             })
           else
-            grugFar.open_instance("tree")
+            grugFar.open_instance("far")
             -- updating the prefills without clearing the search
-            grugFar.update_instance_prefills("tree", prefills, false)
+            grugFar.update_instance_prefills("far", prefills, false)
           end
         end
       end, opts("Search in directory"))
