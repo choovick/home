@@ -228,6 +228,9 @@ bindkey "\e\eOC" end-of-line
 # ZSH system clipboard plugin
 source "${ZSH_CUSTOM:-~/.zsh}/plugins/zsh-system-clipboard/zsh-system-clipboard.zsh"
 
+# TERM for Tmux
+# export TERM=screen-256color
+
 # check if $TERM_PROGRAM == iTerm.app variable set to identify terminal
 if [ "$TERM_PROGRAM" = "iTerm.app" ] ||  [ "$TERM_PROGRAM" = "WezTerm" ] ; then
 	# tmux process detection, only go here is we are not in tmux
