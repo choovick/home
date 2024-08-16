@@ -83,7 +83,7 @@ return {
 
       sources = {
         -- Copilot Source
-        -- { name = "copilot", group_index = 2 },
+        { name = "copilot", group_index = 2 },
         -- Other Sources
         { name = "nvim_lsp", group_index = 2 },
         { name = "path", group_index = 2 },
@@ -94,7 +94,7 @@ return {
       -- configure lspkind for vs-code like pictograms in completion menu
       formatting = {
         format = lspkind.cmp_format({
-          maxwidth = 50,
+          maxwidth = 100,
           ellipsis_char = "...",
           symbol_map = { Copilot = "" },
         }),
