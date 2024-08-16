@@ -34,6 +34,7 @@ return {
         "graphql",
         "terraformls",
         "helm_ls",
+        "jedi_language_server",
       },
     })
 
