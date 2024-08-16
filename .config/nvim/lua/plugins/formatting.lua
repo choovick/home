@@ -24,11 +24,13 @@ return {
         groovy = { "npm-groovy-lint" },
         -- groovy = { "prettier" },
       },
-      format_on_save = {
-        lsp_fallback = true,
-        async = false,
-        timeout_ms = 1000,
-      },
+      -- use leader-cf to format the file
+      format_on_save = false,
+      -- format_on_save = {
+      --   lsp_fallback = true,
+      --   async = false,
+      --   timeout_ms = 1000,
+      -- },
     })
 
     vim.keymap.set({ "n", "v" }, "<leader>cf", function()
