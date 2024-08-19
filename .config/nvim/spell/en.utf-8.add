@@ -17,3 +17,5 @@ stringified
 json
 terraform
 tf
+stringify
+jq
