@@ -133,6 +133,13 @@ return {
       --     end,
       --   })
       -- end,
+      ["terraform"] = function ()
+        -- configure terraform server
+        lspconfig["terraformls"].setup({
+          capabilities = capabilities,
+          filetypes = { "terraform", "terraform-vars", "tf", "tfvars" },
+        })
+      end,
 
       ["graphql"] = function()
         -- configure graphql language server

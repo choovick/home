@@ -19,3 +19,5 @@ terraform
 tf
 stringify
 jq
+metadata
+filesystem

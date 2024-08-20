@@ -51,13 +51,13 @@ opt.splitbelow = true -- split horizontal window to the bottom
 opt.swapfile = false
 
 -- change indents for markdown
-vim.api.nvim_create_autocmd("FileType", {
-  pattern = "markdown",
-  callback = function()
-    vim.opt.shiftwidth = 4
-    vim.opt.tabstop = 4
-  end,
-})
+-- vim.api.nvim_create_autocmd("FileType", {
+--   pattern = "markdown",
+--   callback = function()
+--     vim.opt.shiftwidth = 4
+--     vim.opt.tabstop = 4
+--   end,
+-- })
 
 -- Highlight on yank
 local function augroup(name)

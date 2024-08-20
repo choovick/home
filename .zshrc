@@ -266,3 +266,9 @@ complete -o nospace -C terraform terraform
 
 # Check if stern is installed if so enable completion
 [ -f $(which stern) ] && source <(stern --completion=zsh)
+
+
+# check if .zshrc-local exists and source it
+if [ -f ~/.zshrc-local ]; then
+	source ~/.zshrc-local
+fi
