@@ -187,8 +187,14 @@ compdef ka=kubectl
 # Krew
 export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
 
-alias tf="terraform"
-alias tfo='terraform output -json | jq "reduce to_entries[] as \$entry ({}; .[\$entry.key] = \$entry.value.value)"'
+
+TF_BIN="tofu"
+
+alias tf="${TF_BIN}"
+alias tfa="${TF_BIN} apply"
+alias tfp="${TF_BIN} plan"
+alias tfi="${TF_BIN} init"
+alias tfo='${TF_BIN} output -json | jq "reduce to_entries[] as \$entry ({}; .[\$entry.key] = \$entry.value.value)"'
 alias n="nvim ."
 
 
@@ -201,6 +207,8 @@ fi
 alias la='ls -lah'
 alias ll='ls -lah'
 
+# open all below directories in tmux panes
+alias splitdirs='for dir in */; do tmux split-window -v "cd '\''$dir'\'' && exec $SHELL"; tmux select-layout tiled; done'
 
 # aws profile selector
 alias aws-profile='export AWS_PROFILE=$(aws configure list-profiles | fzf)'
@@ -260,9 +268,9 @@ if [ "$TERM_PROGRAM" = "iTerm.app" ] ||  [ "$TERM_PROGRAM" = "WezTerm" ] ; then
 	fi
 fi
 
-# TF autocomplete
+# TF autocomplet/e
 autoload -U +X bashcompinit && bashcompinit
-complete -o nospace -C terraform terraform
+complete -o nospace -C "${TF_BIN}" "${TF_BIN}"
 
 # Check if stern is installed if so enable completion
 [ -f $(which stern) ] && source <(stern --completion=zsh)
@@ -272,3 +280,5 @@ complete -o nospace -C terraform terraform
 if [ -f ~/.zshrc-local ]; then
 	source ~/.zshrc-local
 fi
+
+complete -o nospace -C /usr/local/bin/tofu tofu

@@ -27,13 +27,13 @@ return {
 
         -- set keybinds
         opts.desc = "Show LSP references"
-        keymap.set("n", "gR", "<cmd>FzfLua lsp_references<CR>", opts)
+        keymap.set("n", "gr", "<cmd>FzfLua lsp_references<CR>", opts)
 
         opts.desc = "Go to declaration"
-        keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
+        keymap.set("n", "gd", vim.lsp.buf.declaration, opts)
 
         opts.desc = "Go to definition"
-        keymap.set("n", "gd", vim.lsp.buf.definition, opts)
+        keymap.set("n", "gD", vim.lsp.buf.definition, opts)
 
         -- opts.desc = "Show LSP definitions"
         -- keymap.set("n", "gd", "<cmd>FzfLua lsp_definitions<CR>", opts)
@@ -66,7 +66,7 @@ return {
         keymap.set("n", "]d", vim.diagnostic.goto_next, opts)
 
         opts.desc = "Restart LSP"
-        keymap.set("n", "<leader>R", ":LspRestart<CR>", opts)
+        keymap.set("n", "<leader>r", ":LspRestart<CR>", opts)
       end,
     })
 
@@ -133,7 +133,7 @@ return {
       --     end,
       --   })
       -- end,
-      ["terraform"] = function ()
+      ["terraformls"] = function ()
         -- configure terraform server
         lspconfig["terraformls"].setup({
           capabilities = capabilities,
