@@ -21,3 +21,6 @@
 !/.config/nvim
 # starship toml
 !/.config/starship.toml
+
+# osx
+.DS_Store
