@@ -84,3 +84,44 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 -- setting language to en_us
 vim.opt.spelllang = "en_us"
 vim.opt.spell = true
+
+-- BACKGROUND COLOR FOR INACTIVE WINDOWS
+-- Set up autocommand for entering a buffer
+vim.api.nvim_create_autocmd("BufEnter", {
+  callback = function()
+    vim.cmd("highlight NormalBackground guibg=NONE") -- Replace NONE with your preferred background color
+    vim.api.nvim_win_set_option(0, "winhl", "Normal:NormalBackground")
+  end,
+})
+
+-- Set up autocommand for leaving a buffer
+vim.api.nvim_create_autocmd("BufLeave", {
+  callback = function()
+    if vim.o.background == "dark" then
+      vim.cmd("highlight InactiveBackground guibg=#3C3836")
+    else
+      vim.cmd("highlight InactiveBackground guibg=#A9A9A9")
+    end
+
+    -- vim.cmd("highlight InactiveBackground guibg=NONE")
+    vim.api.nvim_win_set_option(0, "winhl", "Normal:InactiveBackground")
+  end,
+})
+
+-- Optional: Apply the InactiveBackground on startup for inactive windows
+vim.api.nvim_create_autocmd({ "VimEnter" }, {
+  callback = function()
+    for _, win in ipairs(vim.api.nvim_list_wins()) do
+      if win ~= vim.api.nvim_get_current_win() then
+        if vim.o.background == "dark" then
+          vim.cmd("highlight InactiveBackground guibg=#3C3836")
+        else
+          vim.cmd("highlight InactiveBackground guibg=#A9A9A9")
+        end
+
+        vim.api.nvim_win_set_option(win, "winhl", "Normal:InactiveBackground")
+      end
+    end
+  end,
+})
+--/BACKGROUND COLOR FOR INACTIVE WINDOWS
