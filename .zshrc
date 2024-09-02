@@ -14,6 +14,7 @@ plugins=(
 	git
 	fzf-tab
 	zsh-syntax-highlighting
+	zsh-autosuggestions
 	ohmyzsh-full-autoupdate
 	vi-mode
 )
@@ -39,8 +40,6 @@ export HISTSIZE=1000000000
 setopt hist_expire_dups_first
 setopt hist_ignore_dups
 setopt hist_verify
-
-
 
 # ZSH do not add to history if things start with space
 setopt HIST_IGNORE_SPACE

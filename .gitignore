@@ -10,6 +10,9 @@
 !.stylua.toml
 # tmux config
 !/.tmux.conf
+# my tmux themes
+!/tmux-gruvbox-dark.conf
+!/tmux-gruvbox-light.conf
 
 # wezterm
 !/.wezterm.lua
