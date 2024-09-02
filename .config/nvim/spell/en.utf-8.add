@@ -21,3 +21,4 @@ stringify
 jq
 metadata
 filesystem
+ENV0
