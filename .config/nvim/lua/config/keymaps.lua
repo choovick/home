@@ -17,6 +17,8 @@ keymap.set("n", "x", '"_x')
 keymap.set({ "i", "x", "n", "s" }, "<C-s>", "<cmd>w<cr><esc>", { desc = "Save file" })
 -- bind fd to quit one
 keymap.set("n", "fd", "<cmd>q<cr>", { desc = "Quit" })
+-- bind fg to delete buffer
+keymap.set("n", "fg", "<cmd>bp <bar> bd #<CR>", { desc = "Close buffer" })
 
 -- Lazy hotkey
 keymap.set("n", "<leader>L", "<cmd>Lazy<cr>", { desc = "Lazy" })
@@ -314,3 +316,7 @@ keymap.set({ "n", "v" }, "<leader>sH", ":TmuxNewPaneDir hb<CR>", {
   silent = true,
   desc = "Create a new tmux pane horizontally with the current buffer directory or current working directory",
 })
+
+-- alt-i,o to BufferNext and alt-i to BufferPrevious in all modes
+keymap.set({ "n", "v", "i", "x" }, "<A-o>", "<cmd>BufferNext<CR>", { desc = "Next buffer" })
+keymap.set({ "n", "v", "i", "x" }, "<A-i>", "<cmd>BufferPrevious<CR>", { desc = "Previous buffer" })

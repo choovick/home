@@ -86,42 +86,48 @@ vim.opt.spelllang = "en_us"
 vim.opt.spell = true
 
 -- BACKGROUND COLOR FOR INACTIVE WINDOWS
--- Set up autocommand for entering a buffer
-vim.api.nvim_create_autocmd("BufEnter", {
-  callback = function()
-    vim.cmd("highlight NormalBackground guibg=NONE") -- Replace NONE with your preferred background color
-    vim.api.nvim_win_set_option(0, "winhl", "Normal:NormalBackground")
-  end,
-})
-
--- Set up autocommand for leaving a buffer
-vim.api.nvim_create_autocmd("BufLeave", {
-  callback = function()
+-- Function to apply background color based on window state
+local function set_background(win_id, is_active)
+  if is_active then
+    -- Default background color
+    vim.cmd("highlight NormalBackground guibg=NONE")
+    vim.api.nvim_win_set_option(win_id, "winhl", "Normal:NormalBackground")
+  else
     if vim.o.background == "dark" then
       vim.cmd("highlight InactiveBackground guibg=#3C3836")
     else
       vim.cmd("highlight InactiveBackground guibg=#A9A9A9")
     end
+    vim.api.nvim_win_set_option(win_id, "winhl", "Normal:InactiveBackground")
+  end
+end
 
-    -- vim.cmd("highlight InactiveBackground guibg=NONE")
-    vim.api.nvim_win_set_option(0, "winhl", "Normal:InactiveBackground")
-  end,
-})
-
--- Optional: Apply the InactiveBackground on startup for inactive windows
-vim.api.nvim_create_autocmd({ "VimEnter" }, {
+-- Set up autocommand for entering a window
+vim.api.nvim_create_autocmd({ "WinEnter", "BufEnter" }, {
   callback = function()
+    set_background(vim.api.nvim_get_current_win(), true)
     for _, win in ipairs(vim.api.nvim_list_wins()) do
       if win ~= vim.api.nvim_get_current_win() then
-        if vim.o.background == "dark" then
-          vim.cmd("highlight InactiveBackground guibg=#3C3836")
-        else
-          vim.cmd("highlight InactiveBackground guibg=#A9A9A9")
-        end
-
-        vim.api.nvim_win_set_option(win, "winhl", "Normal:InactiveBackground")
+        set_background(win, false)
       end
     end
   end,
 })
---/BACKGROUND COLOR FOR INACTIVE WINDOWS
+
+-- Set up autocommand for leaving a window
+vim.api.nvim_create_autocmd({ "WinLeave", "BufLeave" }, {
+  callback = function()
+    set_background(vim.api.nvim_get_current_win(), false)
+  end,
+})
+
+-- Optional: Apply the InactiveBackground on startup for inactive windows
+vim.api.nvim_create_autocmd("VimEnter", {
+  callback = function()
+    for _, win in ipairs(vim.api.nvim_list_wins()) do
+      if win ~= vim.api.nvim_get_current_win() then
+        set_background(win, false)
+      end
+    end
+  end,
+})
