@@ -21,6 +21,7 @@ return {
         -- this is called at startup and every time dark mode is switched,
         -- either via the OS, or because you manually set/toggled the mode.
         -- mode is either "light" or "dark"
+
         if mode == "dark" then
           vim.o.background = "dark" -- or "light" for light mode
           vim.cmd([[colorscheme gruvbox]])
@@ -35,6 +36,13 @@ return {
           vim.cmd([[colorscheme gruvbox]])
           -- vim.api.nvim_command("silent \"!tmux set -g @catppuccin_flavour 'latte'\"")
           -- vim.api.nvim_command("silent \"!tmux run '~/.tmux/plugins/tpm/tpm'\"")
+        end
+
+        -- for all windows except the current one, set background based on dark mode
+        for _, win in ipairs(vim.api.nvim_list_wins()) do
+          if win ~= vim.api.nvim_get_current_win() then
+            set_background_based_dark_mode(win, false)
+          end
         end
       end,
     })
