@@ -9,6 +9,6 @@ return {
     height_ratio = 0.9,
   },
   keys = {
-    { "<leader>cg", "<cmd>Glow<cr>", desc = "Glow preview" },
+    { "<leader>cG", "<cmd>Glow<cr>", desc = "Glow preview" },
   },
 }

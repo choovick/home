@@ -44,6 +44,20 @@ config.window_padding = {
   bottom = 0,
 }
 
+-- when inactive, make the background opaque
+wezterm.on('update-status', function(window, pane)
+  local overrides = window:get_config_overrides() or {}
+  local appearance = window:get_appearance()
+  local overrides_appearance = mode_overrides(appearance)
+  if window:is_focused() then
+    overrides_appearance.window_background_opacity = 0.90
+  else
+    overrides_appearance.window_background_opacity = 1
+  end
+  window:set_config_overrides(overrides_appearance)
+end)
+
+
 -- config.colors = {}
 
 -- background blur
