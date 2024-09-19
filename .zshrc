@@ -193,6 +193,7 @@ alias tf="${TF_BIN}"
 alias tfa="${TF_BIN} apply"
 alias tfp="${TF_BIN} plan"
 alias tfi="${TF_BIN} init"
+alias tff="tf fmt -recursive \"$(git rev-parse --show-toplevel)/terraform\""
 alias tfo='${TF_BIN} output -json | jq "reduce to_entries[] as \$entry ({}; .[\$entry.key] = \$entry.value.value)"'
 alias n="nvim ."
 
