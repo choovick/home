@@ -5,6 +5,9 @@ local config = {}
 config.font = wezterm.font("Hack Nerd Font Propo", {})
 config.font_size = 16
 
+-- do not resize font size when window is resized
+config.adjust_window_size_when_changing_font_size = false
+
 -- dynamic color scheme switching
 local function mode_overrides(appearance)
   if appearance:find("Dark") then

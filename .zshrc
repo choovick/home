@@ -16,8 +16,12 @@ plugins=(
 	zsh-syntax-highlighting
 	zsh-autosuggestions
 	ohmyzsh-full-autoupdate
-	vi-mode
+	#vi-mode
 )
+# if not in MC shell add vi-mode
+if [ -z "$MC_SID" ]; then
+	plugins+=(vi-mode)
+fi
 
 source $ZSH/oh-my-zsh.sh
 
@@ -156,6 +160,9 @@ c() {
 # My BIN
 export PATH=$PATH:$HOME/bin
 
+# /Users/sjc-lp03734/.local/bin path
+export PATH=$PATH:$HOME/.local/bin
+
 # mysql
 export PATH="/opt/homebrew/opt/mysql-client/bin:$PATH"
 
@@ -217,7 +224,7 @@ alias kubectx='kubectl config use-context $(kubectl config get-contexts -o name 
 
 
 # display
-alias display-restore='displayplacer "id:2997316B-A423-47EA-8390-865F1276C0E2 res:3440x1440 hz:100 color_depth:8 enabled:true scaling:off origin:(0,0) degree:0" "id:37D8832A-2D66-02CA-B9F7-8F30A301B230 res:1728x1117 hz:120 color_depth:8 enabled:true scaling:on origin:(-1728,323) degree:0" "id:33A9F171-8D5E-4A0A-8472-A882E0CEC299 res:1440x2560 hz:60 color_depth:8 enabled:true scaling:on origin:(3440,-466) degree:270"'
+alias display-restore='displayplacer "id:2997316B-A423-47EA-8390-865F1276C0E2 res:3096x1296 hz:100 color_depth:8 enabled:true scaling:on origin:(0,0) degree:0" "id:37D8832A-2D66-02CA-B9F7-8F30A301B230 res:1728x1117 hz:120 color_depth:8 enabled:true scaling:on origin:(-1728,0) degree:0" "id:33A9F171-8D5E-4A0A-8472-A882E0CEC299 res:1440x2560 hz:60 color_depth:8 enabled:true scaling:on origin:(3096,-466) degree:270"'
 
 # krew
 export PATH="${PATH}:${HOME}/.krew/bin"
