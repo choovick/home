@@ -49,7 +49,7 @@ setopt hist_verify
 setopt HIST_IGNORE_SPACE
 
 # ZSH disable AUTOCD
-unsetopt AUTO_CD
+# unsetopt AUTO_CD
 
 # ZSH don't show "%" on partial lines
 PROMPT_EOL_MARK=''
@@ -75,6 +75,32 @@ export FZF_CTRL_R_OPTS="--preview 'echo {2..}'
   --color header:italic
   --height 60%
   --header 'Press CTRL-Y to copy ucommand into clipboard'"
+
+# helper function to split folders in tmux panes
+function split-folders() {
+  local counter=0
+  # Use fzf to select multiple folders
+  local folders
+  folders=$(ls -d */ | fzf --multi --preview 'ls -la {}')
+
+  echo "Selected folders: $folders"
+
+  if [[ -z "$folders" ]]; then
+    echo "No folders selected. Exiting."
+    return 1
+  fi
+
+  # Iterate over selected folders (handle newline-separated values)
+  while IFS= read -r folder; do
+    if ((counter % 4 == 0)); then
+      tmux split-window -v "cd $folder && exec $SHELL"
+    else
+      tmux split-window -h "cd $folder && exec $SHELL"
+    fi
+    tmux select-layout tiled
+    counter=$((counter + 1))
+  done <<< "$folders"
+}
 
 # check is zoxide is install and source it
 [ -f $(which zoxide) ] && eval "$(zoxide init zsh)" && alias cd='z'
@@ -282,6 +308,15 @@ complete -o nospace -C "${TF_BIN}" "${TF_BIN}"
 # Check if stern is installed if so enable completion
 [ -f $(which stern) ] && source <(stern --completion=zsh)
 
+# Yazi
+function y() {
+	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
+	yazi "$@" --cwd-file="$tmp"
+	if cwd="$(command cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
+		builtin cd -- "$cwd"
+	fi
+	rm -f -- "$tmp"
+}
 
 # check if .zshrc-local exists and source it
 if [ -f ~/.zshrc-local ]; then
